@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classes from './App.css';
 import Person from './Person/Person';
+import ErrorBoundry from './ErrorBoundry/ErrorBoundry';
 
 class App extends Component {
   // classes have properities
@@ -30,6 +31,7 @@ class App extends Component {
     };
 
     person.name = event.target.value;
+    
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
@@ -58,16 +60,15 @@ class App extends Component {
     let persons = null;
     let btnClass = '';
 
-    if (this.state.showPersons) {
+    if (this.state.showPersons) {6
       persons = (
         <div>
           { this.state.persons.map((person, index) => {
-            return <Person 
+            return <ErrorBoundry key={ person.id }><Person 
               click={ () => this.deletePersonHandler(index) }
               name={ person.name } 
               age={ person.age }
-              key={ person.id }
-              changed = { (event) => this.nameChangedHandler(event, person.id) } />
+              changed = { (event) => this.nameChangedHandler(event, person.id) } /></ErrorBoundry>
           }) }
         </div>
       );

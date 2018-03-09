@@ -1,14 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classes from './Person.css'
+import WithClass from '../../../hoc/WithClass';
 
-// children any elements elements between opening and closing tag of component
-const person = ( props ) => {
-    return (
-        <div className={ classes.Person }>
-            <p onClick={ props.click }>I'm {props.name} and I am { props.age } years old!</p>
-            <p>{props.children}</p> 
-            <input type="test" onChange={ props.changed } value={props.name}/>
-        </div>)
+class Person extends Component {
+    constructor(props) {
+        super(props);
+        console.log('person.js -- inside constructor', props);
+    }
+
+    componentWillMount() {
+        console.log('person.js -- inside componentWillMount()');
+    }
+
+    componentDidMount() {
+        console.log('person.js -- inside componentDidMount()');
+    }
+
+    render () {
+        console.log('person.js -- inside render()');
+        return (
+            <WithClass classes={classes.Person}>
+                <p onClick={ this.props.click }>I'm { this.props.name} and I am { this.props.age } years old!</p>
+                <p>{ this.props.children }</p> 
+                <input type="test" onChange={ this.props.changed } value={ this.props.name }/>
+            </WithClass>);
+    }
 }
 
-export default person; 
+export default Person; 

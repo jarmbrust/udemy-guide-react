@@ -1,11 +1,37 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import WithClass from '../hoc/WithClass';
 
-class App extends Component {
-  // classes have properities
-  // state is only available in classes from Components
+class App extends PureComponent {
+  constructor(props) {
+    super(props);
+    console.log('app.js -- inside constructor', props);
+  }
+
+  componentWillMount() {
+    console.log('app.js -- inside componentWillMount()');
+  }
+
+  componentDidMount() {
+    console.log('app.js -- inside componentDidMount()');
+  }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log('UPDATE app.js inside component shouldComponentUpdate()', nextProps, nextState);
+  //   return nextState.persons !== this.state.persons ||
+  //     nextState.showPersons !== this.state.showPersons;
+  // }
+
+  componentWillUpdate(nextProps, nextState) {
+      console.log('UPDATE app.js inside component componentWillUpdate()', nextProps, nextState);
+  }
+
+  componentDidUpdate () {
+      console.log('UPDATE app.js inside component componentDidUpdate()');
+  } 
+
   state = {
     persons: [
       { id: 'dfsg', name: 'James', age: 44 },
@@ -48,14 +74,7 @@ class App extends Component {
   }
 
   render() {
-    // const style = {
-    //   backgroundColor: 'green',
-    //   color: 'white',
-    //   font: 'inherit',
-    //   border: '1px solid blue',
-    //   padding: '8px',
-    //   cursor: 'pointer'
-    // };
+    console.log('app.js -- inside render()');
 
     let persons = null;
 
@@ -68,7 +87,8 @@ class App extends Component {
     }
 
     return (
-      <div className={ classes.App }>
+      <WithClass classes={classes.App}>
+      <button onClick={() => {this.setState({showPersons: true})}}>Show Persons</button>
        <Cockpit 
         appTitle={ this.props.title }
         showPersons={ this.state.showPersons }
@@ -76,7 +96,7 @@ class App extends Component {
         clicked={ this.togglePersonsHandler }
        />
         {persons}
-      </div>
+      </WithClass>
     );
   }
 }
